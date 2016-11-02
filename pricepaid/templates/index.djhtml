@@ -1,0 +1,101 @@
+<!doctype html>
+<!-- shamelessly stolen form here: http://ryanchenkie.com/typeahead-part-1/ -->
+<html>
+    <head>
+        <title>UK House Prices Statistics</title>
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap-theme.css">
+
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+
+    <body ng-app="ukHousePricesApp">
+
+
+    <div class="container">
+
+               <h1>UK House Prices Statistics</h1>
+    <form class="form-horizontal" name="searchForm" ng-submit="submit()" ng-controller="pricePaidCtrl">
+                <div class="form-group">
+                    <label class="col-sm-2" for="town_name">Search for Town</label>
+                     <div class="col-sm-8">
+                        <input id="town_name" type="text" class="form-control" placeholder="Start typing town, district or county name" 
+                                ng-model="selectedTown" typeahead="town as town.full_name for town in getTown($viewValue) | limitTo:30" required />
+                                <!-- typeahead-template-url="/static/town-tpl.html" -->
+                     </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-sm-2" for="start_date">Start Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" id="start_date" name="input" ng-model="start_date"
+                            placeholder="Select date" />
+                    </div>
+                    <label class="col-sm-2" for="end_date">End Date</label>
+                    <div class="col-sm-4">
+                        <input type="date" id="end_date" name="input" ng-model="end_date"
+                                placeholder="Select date" />
+                    </div>
+                 </div>
+                <input class="btn btn-primary" type="submit" id="submit" value="Search..." />
+
+ 
+<!-- div role="alert">
+     <span class="error" ng-show="searchForm.input.$error.required">
+         This field is Required!</span>
+     <span class="error" ng-show="searchForm.input.$error.date">
+         Not a valid date!</span>
+</div -->
+
+    <hr>
+    <div class="container">
+    <table class="res_table table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th ng-click="order('property_type')">
+                    <span class="sortorder" ng-show="predicate === 'property_type'" ng-class="{reverse:reverse}"></span>
+                    Property Type</th>
+                <th ng-click="order('transaction_count')">
+                    <span class="sortorder" ng-show="predicate === 'transaction_count'" ng-class="{reverse:reverse}"></span>
+                    Transaction Count</th>
+                <th ng-click="order('min_price')">
+                    <span class="sortorder" ng-show="predicate === 'min_price'" ng-class="{reverse:reverse}"></span>
+                    Min. Price</th>
+                <th ng-click="order('avg_price')">
+                    <span class="sortorder" ng-show="predicate === 'avg_price'" ng-class="{reverse:reverse}"></span>
+                    Avg.Price</th>
+                <th ng-click="order('max_price')">
+                    <span class="sortorder" ng-show="predicate === 'max_price'" ng-class="{reverse:reverse}"></span>
+                    Max. Price</th>
+            </tr>
+        </thead>
+        <tbody>
+{% verbatim %}
+            <tr ng-repeat="r in result">
+                <td>{{r.property_type}}</td>
+                <td>{{r.transaction_count | number}}</td>
+                <td>{{r.min_price | number}}</td>
+                <td>{{r.avg_price | number:2}}</td>
+                <td>{{r.max_price | number}}</td>
+            </tr>
+            <!-- pre>{{result}}</pre -->
+{% endverbatim %}
+        </tbody>
+    </table>
+    </form>
+
+
+    </div>
+
+    </body>
+
+    <!-- Dependencies -->
+    <script src="/static/bower_components/angular/angular.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="/static/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+
+    <!-- Our Application Scripts -->
+    <script src="/static/scripts/app.js"></script>
+    <script src="/static/scripts/pricePaidCtrl.js"></script>
+
+</html>

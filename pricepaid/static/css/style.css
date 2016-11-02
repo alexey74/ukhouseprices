@@ -1,0 +1,18 @@
+/* @import 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css'; */
+
+.res_table {
+    border-width: 1px;
+}
+.res_table th {
+    text-align: center;
+}
+.res_table td {
+    text-align: center;
+}
+
+.sortorder:after {
+  content: '\25b2';
+}
+.sortorder.reverse:after {
+  content: '\25bc';
+}
